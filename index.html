@@ -46,15 +46,18 @@
     }
 
     #wynik {
-      margin-top: 20px;
-      font-size: 1.2em;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      font-size: 1.6em;
       font-weight: bold;
       text-align: center;
+      color: #333;
     }
   </style>
 </head>
 <body>
   <h1>Kalkulator ocen</h1>
+  <div id="wynik">Wprowadź dane, aby zobaczyć ocenę.</div>
 
   <div class="section">
     <label for="punkty">Zdobyte punkty:</label>
@@ -73,8 +76,6 @@
     <div class="flex-row"><label>Ocena 3:</label><input type="number" id="prog3" value="55" oninput="oblicz()"/></div>
     <div class="flex-row"><label>Ocena 2:</label><input type="number" id="prog2" value="40" oninput="oblicz()"/></div>
   </div>
-
-  <div id="wynik">Wprowadź dane, aby zobaczyć ocenę.</div>
 
   <script>
     function oblicz() {
@@ -96,23 +97,23 @@
       }
 
       const procent = (punkty / max) * 100;
-      let ocena;
+      let ocena, opis;
 
       if (procent >= prog6) {
-        ocena = "6";
+        ocena = "6"; opis = "celujący";
       } else if (procent >= prog5) {
-        ocena = "5";
+        ocena = "5"; opis = "bardzo dobry";
       } else if (procent >= prog4) {
-        ocena = "4";
+        ocena = "4"; opis = "dobry";
       } else if (procent >= prog3) {
-        ocena = "3";
+        ocena = "3"; opis = "dostateczny";
       } else if (procent >= prog2) {
-        ocena = "2";
+        ocena = "2"; opis = "dopuszczający";
       } else {
-        ocena = "1";
+        ocena = "1"; opis = "niedostateczny";
       }
 
-      wynik.innerText = `Twój wynik: ${procent.toFixed(2)}% – ocena: ${ocena}`;
+      wynik.innerHTML = `Wynik: <strong>${procent.toFixed(2)}%</strong><br/>Ocena: <strong>${ocena} (${opis})</strong>`;
     }
   </script>
 </body>
