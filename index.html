@@ -8,50 +8,103 @@
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      max-width: 400px;
+      max-width: 500px;
       margin: auto;
       background-color: #f4f4f4;
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+
     input, button {
-      margin-top: 10px;
+      margin-top: 8px;
       padding: 8px;
       width: 100%;
     }
+
     h1 {
+      text-align: center;
+    }
+
+    .section {
+      margin-top: 20px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    .progi input {
+      width: 60px;
+      margin-right: 10px;
+      text-align: center;
+    }
+
+    .flex-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 5px;
+    }
+
+    #wynik {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
       text-align: center;
     }
   </style>
 </head>
 <body>
   <h1>Kalkulator ocen</h1>
-  <label for="punkty">Zdobyte punkty:</label>
-  <input type="number" id="punkty" />
-  <label for="max">Maksymalna liczba punktów:</label>
-  <input type="number" id="max" />
-  <button onclick="oblicz()">Oblicz ocenę</button>
-  <h2 id="wynik"></h2>
+
+  <div class="section">
+    <label for="punkty">Zdobyte punkty:</label>
+    <input type="number" id="punkty" oninput="oblicz()"/>
+    
+    <label for="max">Maksymalna liczba punktów:</label>
+    <input type="number" id="max" oninput="oblicz()"/>
+  </div>
+
+  <div class="section">
+    <h3>Ustaw progi ocen (w %):</h3>
+    <div class="flex-row">
+      <label>Ocena 5:</label>
+      <input type="number" id="prog5" value="90" oninput="oblicz()"/>
+    </div>
+    <div class="flex-row">
+      <label>Ocena 4:</label>
+      <input type="number" id="prog4" value="75" oninput="oblicz()"/>
+    </div>
+    <div class="flex-row">
+      <label>Ocena 3:</label>
+      <input type="number" id="prog3" value="60" oninput="oblicz()"/>
+    </div>
+  </div>
+
+  <div id="wynik">Wprowadź dane, aby zobaczyć ocenę.</div>
 
   <script>
     function oblicz() {
       const punkty = parseFloat(document.getElementById('punkty').value);
       const max = parseFloat(document.getElementById('max').value);
+      const prog5 = parseFloat(document.getElementById('prog5').value);
+      const prog4 = parseFloat(document.getElementById('prog4').value);
+      const prog3 = parseFloat(document.getElementById('prog3').value);
       const wynik = document.getElementById('wynik');
 
-      if (isNaN(punkty) || isNaN(max) || max === 0) {
-        wynik.innerText = 'Wprowadź poprawne dane!';
+      if (isNaN(punkty) || isNaN(max) || max <= 0 || isNaN(prog5) || isNaN(prog4) || isNaN(prog3)) {
+        wynik.innerText = 'Wprowadź poprawne dane.';
         return;
       }
 
       const procent = (punkty / max) * 100;
       let ocena;
 
-      if (procent >= 90) {
+      if (procent >= prog5) {
         ocena = "5";
-      } else if (procent >= 75) {
+      } else if (procent >= prog4) {
         ocena = "4";
-      } else if (procent >= 60) {
+      } else if (procent >= prog3) {
         ocena = "3";
       } else {
         ocena = "2";
